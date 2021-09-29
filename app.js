@@ -63,68 +63,57 @@ const galleryItems = [
       description: 'Lighthouse Coast Sea',
     },
   ];
-  
-  const ref={
-    galleryList:document.querySelector('.js-gallery'),
-    //  lightbox:document.querySelector('.lightbox'),
-     modal:document.querySelector('.js-lightbox'),
-     modalOverlay:document.querySelector('.lightbox__overlay'),
-    //  lightbox__content:document.querySelector('.lightbox__content'),
-     modalContentImage:document.querySelector('.lightbox__image'),
-     closeButton:document.querySelector('button[data-action="close-lightbox"]')
-     
-  };
-  const makeList=({preview,original,description})=>{
-    return `<li class="gallery__item">
+  const refs={
+    gallery:document.querySelector('.gallery'),
+    modal:document.querySelector('.lightbox'),
+    modalOverlay:document.querySelector(".lightbox__overlay"),
+    modalContant:document.querySelector('.lightbox__image'),
+    modalBatton:document.querySelector('.lightbox__button'),
+  }
+  const imageList=makeImageList(galleryItems);
+  function makeImageList(galleryItems){
+    return galleryItems.map(({preview,original,description})=>
+    `<li class="gallery__item">
     <a
       class="gallery__link"
-      href='${original}'
+      href="${original}"
     >
       <img
         class="gallery__image"
-        src='${preview}'
-        data-source='${original}'
-        alt='${description}'
+        src="${preview}"
+        data-source="${original}"
+        alt="${description}"
       />
     </a>
-  </li>`
+  </li>`).join('');
   }
-  const makeEl=galleryItems.map(makeList).join('');
-
-   ref.galleryList.insertAdjacentHTML('beforeend',makeEl);
-  
-  
- 
+  refs.gallery.insertAdjacentHTML('beforeend',imageList);
   function onOpenModal(event){
-    
     event.preventDefault();
-    ref.modal.classList.add('is-open');
-    ref.modalContentImage.src = event.target.dataset.source; 
-    ref.modalContentImage.alt = event.target.alt;
-    
-    
+    refs.modal.classList.add('is-open');
+    refs.modalContant.src=event.target.dataset.source; 
+                          
+    refs.modalContant.alt=event.target.alt;
   }
-  
+  refs.gallery.addEventListener('click',onOpenModal);
+  refs.modalBatton.addEventListener('click',onCloseModal);
   function onCloseModal(event){
-    ref.modal.classList.remove('is-open');
-    ref.modalContentImage.src = '';
-    ref.modalContentImage.alt = '';
-   
-  }
-  ref.galleryList.addEventListener("click",onOpenModal);
-  ref.closeButton.addEventListener("click",onCloseModal);
-  ref.modalOverlay.addEventListener("click",onClickOverlay);
- window.addEventListener("keydown",onEscKeyPress);
-  function onClickOverlay(event){
-    if (event.currentTarget === event.target) {
-      onCloseModal();
+ refs.modal.classList.remove('is-open');
+ refs.modalContant.src=''; 
+                          
+ refs.modalContant.alt='';
+  };
+  refs.modalOverlay.addEventListener('click',onOverlayClick);
+  function onOverlayClick(event){
+    if(event.currentTarget===event.target){
+      onCloseModal()
     }
   }
-  function onEscKeyPress(event) {
-    const ESC_KEY_CODE = 'Escape';
-    const isEscKey = event.code === ESC_KEY_CODE;
-  
-    if (isEscKey) {
-      onCloseModal();
+  window.addEventListener('keydown',onEskDown);
+  function onEskDown(event){
+    const Esk='Escape';
+    if(Esk===event.code){
+      onCloseModal()
     }
   }
+ 
