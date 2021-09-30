@@ -91,17 +91,14 @@ const galleryItems = [
   function onOpenModal(event){
     event.preventDefault();
     refs.modal.classList.add('is-open');
-    refs.modalContant.src=event.target.dataset.source; 
-                          
-    refs.modalContant.alt=event.target.alt;
+    
+    
   }
   refs.gallery.addEventListener('click',onOpenModal);
   refs.modalBatton.addEventListener('click',onCloseModal);
   function onCloseModal(event){
- refs.modal.classList.remove('is-open');
- refs.modalContant.src=''; 
-                          
- refs.modalContant.alt='';
+  refs.modal.classList.remove('is-open');
+ 
   };
   refs.modalOverlay.addEventListener('click',onOverlayClick);
   function onOverlayClick(event){
@@ -116,4 +113,9 @@ const galleryItems = [
       onCloseModal()
     }
   }
- 
+  function change(event){
+if(elem.classList.contains('is-open')){
+  refs.modalContant.src=event.target.dataset.source;
+}
+refs.modalContant.src='';
+  }
