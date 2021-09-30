@@ -91,7 +91,7 @@ const galleryItems = [
   function onOpenModal(event){
     event.preventDefault();
     refs.modal.classList.add('is-open');
-    
+    refs.modalContant.src=event.target.dataset.source;
     
   }
   refs.gallery.addEventListener('click',onOpenModal);
@@ -113,9 +113,4 @@ const galleryItems = [
       onCloseModal()
     }
   }
-  function change(event){
-if(elem.classList.contains('is-open')){
-  refs.modalContant.src=event.target.dataset.source;
-}
-refs.modalContant.src='';
-  }
+  
